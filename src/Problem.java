@@ -1,50 +1,42 @@
-import UnionFind.UnionFind;
 import UnionFind.UnionFindInArray;
 import java.util.*;
 
 public class Problem {
-    private int counter;
-    private Map<Integer, Integer> coder;
-    private List<Pair> points;
+    private final List<Road> roads;
+    private final int numLocations;
 
-    private UnionFind partition;
-
-    public Problem(int nSeg) {
-        this.counter = 0;
-        this.coder = new HashMap<>();
-        this.points = new LinkedList<>();
-        this.partition = new UnionFindInArray(nSeg * 2); // worst case
+    public Problem(int numLocations) {
+        this.numLocations = numLocations;
+        this.roads = new ArrayList<>();
     }
 
-    public void addNode(int x, int y) {
-        Pair p = new Pair(x, y);
-        // Adicionar ao coder caso ainda não existe codificação
-        // Temos que utilizar aqui o hash porque é o hash(p)
-        // que fica guardado como chave no nosso coder!
-        // TODO
-        points.add(p);
-
+    public void addRoad(int l1, int l2, int h) {
+        roads.add(new Road(l1, l2, h));
     }
 
-    private int hash(Pair p) {
-        return p.getX() * 1000 + p.getY();
-    }
+    public int findShortestPath(int start, int destination) {
 
-    public int paint() {
-        int nPainted = 0;
-        ListIterator<Pair> it = this.points.listIterator();
-        while (it.hasNext()) {
-            Pair p1 = it.next();
-            Pair p2 = it.next();
-            // Buscar no coder o correspondente dum ponto
-            // na nossa partição, realizar a operação de find
-            // e verificar se os representantes são diferentes.
-            // Caso sejam diferentes, então aumentamos o counter
-            // de segmentos pintados, e realizar a uniao dos dois
-            // representantes.
-            // TODO
+        roads.sort(Comparator.comparingInt(Road::getH));
+
+        UnionFindInArray uf = new UnionFindInArray(numLocations);
+
+        for (Road road : roads) {
+            try {
+                int rep1 = uf.find(road.getFrom());
+                int rep2 = uf.find(road.getTo());
+
+                if (rep1 != rep2) {
+                    uf.union(rep1, rep2);
+
+                    if (uf.find(start) == uf.find(destination)) {
+                        return road.getH();
+                    }
+                }
+            } catch (Exception e) {
+                System.out.println("UnionFind Failed");
+            }
         }
-        return nPainted;
-    }
 
+        return -1;
+    }
 }

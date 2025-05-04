@@ -34,33 +34,33 @@ public class UnionFindInArray implements UnionFind {
     }
 
 
-    // Returns the representative of the set that contains 
-    // the specified element.
-    //
-    // Without side effects - Recursive.
-    public int find( int element ) throws InvalidElementException {
-        if ( !this.isInTheDomain(element) )
-            throw new InvalidElementException(validRangeMsg);
-
-        return this.findRec(element);
-    }
-
-
 //    // Returns the representative of the set that contains
 //    // the specified element.
 //    //
-//    // Without side effects - Iterative.
+//    // Without side effects - Recursive.
 //    public int find( int element ) throws InvalidElementException {
 //        if ( !this.isInTheDomain(element) )
 //            throw new InvalidElementException(validRangeMsg);
 //
-//        int node = element;
-//        while ( partition[node] >= 0 )
-//            node = partition[node];
-//        return node;
+//        return this.findRec(element);
 //    }
-//
-//
+
+
+    // Returns the representative of the set that contains
+    // the specified element.
+    //
+    // Without side effects - Iterative.
+    public int find( int element ) throws InvalidElementException {
+        if ( !this.isInTheDomain(element) )
+            throw new InvalidElementException(validRangeMsg);
+
+        int node = element;
+        while ( partition[node] >= 0 )
+            node = partition[node];
+        return node;
+    }
+
+
 //    // Returns the representative of the set that contains
 //    // the specified element.
 //    //
