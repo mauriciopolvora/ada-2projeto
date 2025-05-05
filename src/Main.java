@@ -15,7 +15,7 @@ public class Main {
         int R = Integer.parseInt(firstLine[1]);
 
         // Create a problem instance with L locations
-        Problem problem = new Problem(L);
+        Problem2 problem = new Problem2(L);
 
         // Read the R roads
         for (int i = 0; i < R; i++) {
