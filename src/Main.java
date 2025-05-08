@@ -15,7 +15,7 @@ public class Main {
         int R = Integer.parseInt(firstLine[1]);
 
         // Create a problem instance with L locations
-        Problem2 problem = new Problem2(L);
+        Problem problem = new Problem(L, R);
 
         // Read the R roads
         for (int i = 0; i < R; i++) {
@@ -37,8 +37,8 @@ public class Main {
             int startLocation = Integer.parseInt(parts[0]);
             int destinationLocation = Integer.parseInt(parts[1]);
 
-            // Find shortest path and print the result
-            int shortestTime = problem.findShortestPath(startLocation, destinationLocation);
+            // Find the shortest path and print the result
+            int shortestTime = problem.findHardness(startLocation, destinationLocation);
             System.out.println(shortestTime);
         }
     }

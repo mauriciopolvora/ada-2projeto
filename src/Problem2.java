@@ -9,8 +9,8 @@ public class Problem2 {
     private boolean mstBuilt = false;
 
     @SuppressWarnings("unchecked")
-    public Problem2(int numLocations) {
-        this.roads = new ArrayList<>();
+    public Problem2(int numLocations, int numRoads) {
+        this.roads = new ArrayList<>(numRoads);
         this.numLocations = numLocations;
         this.mst = new LinkedList[numLocations];
 
@@ -53,15 +53,16 @@ public class Problem2 {
         mstBuilt = true;
     }
 
-    // Find hardness of journey between start and destination using DFS
-    public int findShortestPath(int start, int destination) {
+    // Find hardness of journey between start and destination using BFS
+    public int findHardness(int start, int destination) {
         // Ensure MST is built
         buildMST();
 
-        if (start == destination) return 0;
-
         boolean[] visited = new boolean[numLocations];
-        int[] maxEdgeWeight = new int[numLocations];
+        int[] maxRoadTime = new int[numLocations];
+
+        Arrays.fill(maxRoadTime, Integer.MAX_VALUE);
+        maxRoadTime[start] = 0;
 
         Queue<Integer> queue = new LinkedList<>();
         queue.add(start);
@@ -70,24 +71,22 @@ public class Problem2 {
         while (!queue.isEmpty()) {
             int current = queue.poll();
 
-            // destination reached
             if (current == destination) {
-                return maxEdgeWeight[destination];
+                break; // Found the destination
             }
 
-            // neighbors
             for (Road road : mst[current]) {
                 int next = road.getTo();
                 int weight = road.getH();
 
                 if (!visited[next]) {
                     visited[next] = true;
-                    maxEdgeWeight[next] = Math.max(maxEdgeWeight[current], weight);
+                    maxRoadTime[next] = Math.max(maxRoadTime[current], weight);
                     queue.add(next);
                 }
             }
         }
 
-        return -1; // Shoulnt happen if MST works
+        return maxRoadTime[destination];
     }
 }
