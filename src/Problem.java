@@ -64,7 +64,7 @@ public class Problem {
         Arrays.fill(maxRoadTime, Integer.MAX_VALUE);
         maxRoadTime[start] = 0;
 
-        Stack<Integer> stack = new Stack<>();
+        Deque<Integer> stack = new ArrayDeque<>(numLocations);
         stack.push(start);
         visited[start] = true;
 

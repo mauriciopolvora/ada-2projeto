@@ -24,14 +24,13 @@ public class Main {
             int l2 = Integer.parseInt(parts[1]);
             int h = Integer.parseInt(parts[2]);
 
-            // Add road between locations l1 and l2 with travel time h
+            // Add road between travel time h
             problem.addRoad(l1, l2, h);
         }
 
-        // Read the number of test cases
+        // Read the T test cases
         int T = Integer.parseInt(reader.readLine());
 
-        // Process each test case
         for (int i = 0; i < T; i++) {
             String[] parts = reader.readLine().split(" ");
             int startLocation = Integer.parseInt(parts[0]);
